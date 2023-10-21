@@ -18,7 +18,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                 "timestamp": int(time.time() * 1000),
                 "event-type": "system",
                 "client-id": client_id,
-                "nickname": "System",
+                "name": "System",
                 "message": f"Client #{client_id} joined the chat",
             }
         )
@@ -42,7 +42,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     "timestamp": int(time.time() * 1000),
                     "event-type": "system",
                     "client-id": client_id,
-                    "nickname": "System",
+                    "name": "System",
                     "message": f"Client #{client_id} left the chat",
                 }
             )
