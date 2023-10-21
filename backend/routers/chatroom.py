@@ -49,8 +49,13 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
     else:
         try:
             while True:
-                # async sleep to prevent 100% CPU usage
-                await asyncio.sleep(0.1)
+                # receive client message or continue if timeout
+                try:
+                    data = await asyncio.wait_for(
+                        websocket.receive_text(), timeout=1
+                    )
+                except asyncio.TimeoutError:
+                    continue
 
         except WebSocketDisconnect:
             connectionManager.disconnect(websocket)
