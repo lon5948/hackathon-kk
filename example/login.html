@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname">
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the entered nickname
+            const nickname = document.getElementById("nickname").value;
+
+            // Check if a nickname is entered
+            if (nickname.trim() !== "") {
+                // Store the nickname in sessionStorage
+                sessionStorage.setItem("nickname", nickname);
+
+                // Redirect to main.html
+                window.location.href = "chatroom.html";
+            } else {
+                alert("Please enter a nickname.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -56,7 +56,7 @@ window.onload = () => {
   // Send message on button click
   document.getElementById("chat-send").addEventListener("click", () => {
     const message = document.getElementById("chat-input").value;
-    const nickname = document.getElementById("chat-nickname").value;
+    const nickname = sessionStorage.getItem("nickname");
     ws.send(constructMessage(nickname, message));
   });
 };
