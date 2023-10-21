@@ -1,5 +1,6 @@
 import asyncio
 import json
+import time
 import pandas as pd
 import numpy as np
 import os
@@ -26,7 +27,7 @@ def process(msg: str):
 
 
 def update_orders(content: dict, orders: list):
-    orders_df = process_csv("orders.csv")
+    orders_df = process_csv("../output/orders.csv")
     for (item, count) in orders:
         count = int(count)
         if count < 0:
@@ -49,11 +50,11 @@ def update_orders(content: dict, orders: list):
         }
         new_order_df = pd.DataFrame(data=order_content)
         new_df = pd.concat([orders_df, new_order_df])
-        new_df.to_csv("orders.csv", encoding='utf-8', index=False)
+        new_df.to_csv("../output/orders.csv", encoding='utf-8', index=False)
 
 
 def get_items():
-    df = process_csv("items.csv")
+    df = process_csv("../output/items.csv")
     global items_df
     items_df = df.copy()
 
@@ -80,10 +81,23 @@ async def item_thread():
         await asyncio.sleep(1)
 
 
+async def txt_thread():
+    with open("../output/output.txt", "w") as f:
+        while True:
+            await asyncio.sleep(1)
+            f.seek(0)
+            f.truncate()
+            t = time.strftime('%c')
+            f.write(f"{t}\n{items_df.to_string(index=False, justify='center')}\n")
+            f.flush()
+            os.fsync(f.fileno())
+
+
 async def main():
     task1 = asyncio.create_task(ws_thread())
     task2 = asyncio.create_task(item_thread())
-    await asyncio.gather(task1, task2)
+    task3 = asyncio.create_task(txt_thread())
+    await asyncio.gather(task1, task2, task3)
 
 
 if __name__ == "__main__":

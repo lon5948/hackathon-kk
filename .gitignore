@@ -1,3 +1,6 @@
 __pycache__
 .DS_STORE
 .idea
+/output/items.csv
+/output/orders.csv
+/output/output.txt
