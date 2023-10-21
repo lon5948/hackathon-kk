@@ -45,9 +45,6 @@ window.onload = () => {
     // a message was received
     console.log(e.data);
     messages.push(e.data);
-    // repeat messages
-    for (let i = 0; i < 50; i++)
-      messages.push(e.data);
     renderMessages();
   };
 
