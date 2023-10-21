@@ -1,10 +1,19 @@
+import websockets
 import asyncio
-from websockets.sync.client import connect
+import signal
 
-def listen():
-    with connect("ws://hackathon-kk.dasbd72.com/ws/chatroom/listener") as websocket:
-        while True:
-            message = websocket.recv()
-            print(f"Received: {message}")
+serverURL = "ws://hackathon-kk.dasbd72.com"
+clientId = "listener"
 
-listen()
+
+async def main():
+    async for websocket in websockets.connect(f"{serverURL}/ws/chatroom/{clientId}"):
+        try:
+            async for msg in websocket:
+                print(msg)
+        except websockets.ConnectionClosed:
+            continue
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
