@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from routers import users
+from routers import chatroom
 
 load_dotenv()
 
@@ -28,6 +29,8 @@ app = FastAPI(
 
 origins = [
     "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
 
 logger.info("Add middleware")
@@ -41,6 +44,7 @@ app.add_middleware(
 
 logger.info("Include routers")
 app.include_router(users.router)
+app.include_router(chatroom.router)
 
 if __name__ == "__main__":
     uvicorn.run(
