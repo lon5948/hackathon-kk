@@ -4,34 +4,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link rel="shortcut icon" href="./favicon.ico">
+    <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+    <link rel="shortcut icon" href="./favicon.ico" />
     <title>Chatroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html,
+      body {
+        height: 100vh;
+      }
+
+      .stream-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .stream-container iframe,
+      .stream-container object,
+      .stream-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .chat-container {
+        height: 100vh;
+      }
+
+      #chat-output-container {
+        scrollbar-width: thin;
+      }
+
+      /* width */
+      ::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        height: 0px;
+        width: 0px;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-    <div class="column left-column">
-    <iframe
-      src="https://showroom.one-stage.kkstream.io?token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3N2RhODVjLTllZjgtNTVjYS05M2FkLTAyYTMyZjkwZjg2MyIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV9pZCI6IjZkOTc0MDFkLTAxZDYtNDY4Ny05NTRmLWE3NGZiN2EzNWJkMCIsInJlc291cmNlX3R5cGUiOiJSRVNPVVJDRV9UWVBFX0xJVkVfRVZFTlQifQ.H3NDCRViL9ieUC_KEsGM1bGo1KtWStPc_Irwze7NCcm6Rf5sK6UWU2TGQs2yO5yOGilfu3ksV5HvXvMsQFk_4VHjR467YE77QwSwrndwdX79vvB-ST0semKngkZqzWp9XcWrez9ACZSImtTWl2fyhmTkB-ykPLuq98Sk3tf79oZ9PmvTK08AOkYu-xssv559RoCvxlQN24Wx-um1HTzXwGqXYD_4hB07dIPdXSFX41yMZP3S61-Qdm4-7o_jZV6BzwBev-ztkYGAJZI3EUmwueqotHdMipB69w7uYeoLvghFGPClUqOu446bvCWSPpeB8hsInsgEp89JnX2P3HdguD0oj8Hd6F_TYS9n5yPuwbfyF09lPVYns6vCSokFS1gSMWVKa4AWIWYsHzU_1oJhAxfkmELRB-VA7dPa-0T6z9hy8_VBkA2w7C5ejXrySNuuh5-gfhKKzRL_mRs8vjIm4MJXghuolFrMGNdpZlSWq4htplHzP0cSX6mny2SCI8u8_4ICmMmPiJVaJ6syqLLr8vjJph-0leBIgYavWQXtUOeEaRgaod4wqN7gB2VrepBxu2zIA9aHcH_UDD2FBYMsKwUI3LbsImvuGcvGDXOpTJK3FWQpQ77fPvE9DshlVWuHojJidA5YsvH9Eyba8Dc-wJRpxFTvQHEfPgeBTFnWvm4"
-      width="960"
-      height="540"
-      allow="autoplay; encrypted-media; clipboard-write"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
-    <script src="./js/iframe.js"></script>
-    </div>
-    <div class="column right-column">
-    
-    <div id="chat-output-container"></div>
-    <div id="chat-input-container">
-      <div>
-        <label for="chat-input">Enter Message:</label>
-        <input type="text" name="chat-input" id="chat-input">
-        <button id="chat-send">Send</button>
+    <div class="flex flex-row h-100">
+      <div class="basis-9/12 h-100">
+        <div class="stream-container">
+          <iframe
+            src="https://showroom.one-stage.kkstream.io?token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3N2RhODVjLTllZjgtNTVjYS05M2FkLTAyYTMyZjkwZjg2MyIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV9pZCI6IjZkOTc0MDFkLTAxZDYtNDY4Ny05NTRmLWE3NGZiN2EzNWJkMCIsInJlc291cmNlX3R5cGUiOiJSRVNPVVJDRV9UWVBFX0xJVkVfRVZFTlQifQ.H3NDCRViL9ieUC_KEsGM1bGo1KtWStPc_Irwze7NCcm6Rf5sK6UWU2TGQs2yO5yOGilfu3ksV5HvXvMsQFk_4VHjR467YE77QwSwrndwdX79vvB-ST0semKngkZqzWp9XcWrez9ACZSImtTWl2fyhmTkB-ykPLuq98Sk3tf79oZ9PmvTK08AOkYu-xssv559RoCvxlQN24Wx-um1HTzXwGqXYD_4hB07dIPdXSFX41yMZP3S61-Qdm4-7o_jZV6BzwBev-ztkYGAJZI3EUmwueqotHdMipB69w7uYeoLvghFGPClUqOu446bvCWSPpeB8hsInsgEp89JnX2P3HdguD0oj8Hd6F_TYS9n5yPuwbfyF09lPVYns6vCSokFS1gSMWVKa4AWIWYsHzU_1oJhAxfkmELRB-VA7dPa-0T6z9hy8_VBkA2w7C5ejXrySNuuh5-gfhKKzRL_mRs8vjIm4MJXghuolFrMGNdpZlSWq4htplHzP0cSX6mny2SCI8u8_4ICmMmPiJVaJ6syqLLr8vjJph-0leBIgYavWQXtUOeEaRgaod4wqN7gB2VrepBxu2zIA9aHcH_UDD2FBYMsKwUI3LbsImvuGcvGDXOpTJK3FWQpQ77fPvE9DshlVWuHojJidA5YsvH9Eyba8Dc-wJRpxFTvQHEfPgeBTFnWvm4"
+            allow="autoplay; encrypted-media; clipboard-write"
+            width="100"
+            height="100"
+            frameborder="0"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </div>
+      <div class="basis-3/12 h-100">
+        <div class="chat-container">
+          <div
+            id="chat-output-container"
+            class="overflow-scroll"
+            style="height: 90%"
+          ></div>
+          <div id="chat-input-container" style="height: 10%">
+            <label for="chat-input">Enter Message:</label>
+            <div class="flex flex-row">
+              <input
+                type="text"
+                name="chat-input"
+                id="chat-input"
+                class="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 basis-9/12"
+              />
+              <button
+                type="button"
+                id="chat-send"
+                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-2 basis-3/12"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <script src="./js/iframe.js"></script>
     <script src="./js/chatroom.js"></script>
-    </div>
   </body>
 </html>

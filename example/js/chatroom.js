@@ -29,6 +29,9 @@ window.onload = () => {
       const messageParsed = JSON.parse(message);
       const messageElement = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
+      messageElement.classList.add("chat-message");
+      messageElement.classList.add("text-sm");
+
       messageElement.innerHTML = `${date} ${messageParsed["name"]} ${messageParsed["message"]}`;
       chatOutputContainer.appendChild(messageElement);
     });
@@ -42,6 +45,9 @@ window.onload = () => {
     // a message was received
     console.log(e.data);
     messages.push(e.data);
+    // repeat messages
+    for (let i = 0; i < 50; i++)
+      messages.push(e.data);
     renderMessages();
   };
 
