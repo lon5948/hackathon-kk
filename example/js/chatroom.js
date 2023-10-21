@@ -76,23 +76,25 @@ window.onload = () => {
         usernameElement.className = "text-xs ml-2 w-2/3";
 
         const messageElement = document.createElement("div");
-        if (isCurrentUser)
-          messageElement.className =
-            "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
-        else
-          messageElement.className =
-            "text-sm pl-2 py-2 px-3 bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black";
+        messageElement.className = `text-sm pl-2 py-2 px-3 ${
+          isCurrentUser
+            ? "bg-sky-400 rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-3xl text-white"
+            : "bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black"
+        }`;
         messageElement.innerHTML = `${messageParsed["message"]}`;
 
         const messageContainer = document.createElement("div");
         if (!isContinuousMessage) messageContainer.appendChild(usernameElement);
         messageContainer.appendChild(messageElement);
-        messageContainer.className = "w-2/3 flex flex-col justify-end";
+        messageContainer.className = `w-2/3 flex flex-col justify-${
+          isCurrentUser ? "end" : "start"
+        }`;
 
         const fullMessageContainer = document.createElement("div");
         fullMessageContainer.appendChild(messageContainer);
-        fullMessageContainer.className =
-          "w-full flex flex-row justify-end mt-1";
+        fullMessageContainer.className = `w-full flex flex-row mt-1 justify-${
+          isCurrentUser ? "end" : "start"
+        }`;
 
         if (!isContinuousMessage)
           chatOutputContainer.appendChild(dateElementContainer);
