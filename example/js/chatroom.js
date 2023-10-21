@@ -5,7 +5,30 @@ window.onload = () => {
   const ws = new WebSocket(`${serverURL}/ws/chatroom/${clientId}`);
 
   const messages = [];
-
+  const url = sessionStorage.getItem("url");
+  iframeElement = document.getElementById("iframe-content");
+  console.log(url);
+  html_str = ['<iframe',
+    'src=',
+    url,
+    'allow="autoplay; encrypted-media; clipboard-write"',
+    'width="0"',
+    'height="0"',
+    'frameborder="0"',
+    'allowfullscreen',
+    '>',
+    '</iframe>'
+  ].join(" ")
+  
+  iframeElement.innerHTML = `${html_str}`;
+  console.log(iframeElement);
+  window.addEventListener('message', event => {
+    if (event.data.command === 'ping') {
+      Array.from(document.querySelectorAll('iframe')).forEach(iframe =>
+        iframe?.contentWindow?.postMessage({ command: 'pong' }, '*')
+      );
+    }
+  });
   const constructMessage = (name, email, address, message) => {
     const messageObject = {
       timestamp: Date.now(),
