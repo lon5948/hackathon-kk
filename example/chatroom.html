@@ -64,7 +64,6 @@
         height: 0px;
         width: 0px;
       }
-
     </style>
   </head>
   <body>
@@ -82,31 +81,44 @@
           </iframe>
         </div>
       </div>
-      <div class="lg:basis-3/12 lg:h-full">
-        <div class="chat-container lg:h-screen">
-          <div
-            id="chat-output-container"
-            class="overflow-scroll px-2 pb-2 h-60 sm:h-48 md:h-24 lg:h-5/6 "
-          ></div>
-          <div
-            id="chat-input-container"
-            class="px-2 lg:h-1/6"
-          >
-            <label for="chat-input">Enter Message:</label>
-            <div class="flex flex-row">
-              <input
-                type="text"
-                name="chat-input"
-                id="chat-input"
-                class="block w-full p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 basis-9/12"
-              />
-              <button
-                type="button"
-                id="chat-send"
-                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-2 basis-3/12"
+      <div class="chat-container lg:basis-3/12 lg:h-full">
+        <div class="lg:h-screen lg:p-1 w-full flex flex-col justify-center">
+          <div class="lg:h-[90%] lg:outline lg:outline-1 lg:outline-zinc-200 lg:rounded-lg w-full">
+            <div
+              id="chat-output-container"
+              class="overflow-scroll px-2 pb-2 h-60 sm:h-48 md:h-24 lg:h-[90%]"
+            ></div>
+            <div id="chat-input-container" class="px-2 lg:h-[10%]">
+              <!-- <div class="mb-6">
+              <label
+                for="email"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Your email</label
               >
-                Send
-              </button>
+              <input
+                type="email"
+                id="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="name@flowbite.com"
+                required
+              />
+            </div> -->
+              <div class="flex flex-row pt-2">
+                <input
+                  type="text"
+                  name="chat-input"
+                  id="chat-input"
+                  class="block w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 p-2 sm:text-xs basis-auto"
+                  placeholder="Message"
+                />
+                <button
+                  type="button"
+                  id="chat-send"
+                  class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-r-lg text-sm px-3 py-1"
+                >
+                  Send
+                </button>
+              </div>
             </div>
           </div>
         </div>
