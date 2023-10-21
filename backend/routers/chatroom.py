@@ -1,7 +1,7 @@
 import asyncio
+import time
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-import time
 
 from routers.manager import consoleManager
 
@@ -11,13 +11,15 @@ router = APIRouter()
 @router.websocket("/ws/chatroom/{client_id}")
 async def ws_symbol_events(websocket: WebSocket, client_id: str):
     await consoleManager.connect(websocket)
-    await consoleManager.broadcast_json({
-        "timestamp": int(time.time() * 1000),
-        "event-type": "system",
-        "client-id": client_id,
-        "nickname": "System",
-        "message": f"Client #{client_id} joined the chat",
-    })
+    await consoleManager.broadcast_json(
+        {
+            "timestamp": int(time.time() * 1000),
+            "event-type": "system",
+            "client-id": client_id,
+            "nickname": "System",
+            "message": f"Client #{client_id} joined the chat",
+        }
+    )
     try:
         while True:
             # receive client message or continue if timeout
@@ -33,10 +35,12 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
 
     except WebSocketDisconnect:
         consoleManager.disconnect(websocket)
-        await consoleManager.broadcast_json({
-            "timestamp": int(time.time() * 1000),
-            "event-type": "system",
-            "client-id": client_id,
-            "nickname": "System",
-            "message": f"Client #{client_id} left the chat",
-        })
+        await consoleManager.broadcast_json(
+            {
+                "timestamp": int(time.time() * 1000),
+                "event-type": "system",
+                "client-id": client_id,
+                "nickname": "System",
+                "message": f"Client #{client_id} left the chat",
+            }
+        )
