@@ -11,9 +11,9 @@
     <style>
       html,
       body {
-        position: relative;
+        /* position: relative; */
         height: 100vh;
-        overflow: hidden;
+        /* overflow: hidden; */
       }
 
       .stream-container {
@@ -68,20 +68,22 @@
     </style>
   </head>
   <body>
-    <div class="flex flex-col lg:flex-row h-full">
-      <div class="basis-full lg:basis-9/12 lg:h-full content-center grid">
-        <div class="stream-container" id="iframe-content">
+        
           
-        </div>
+    <div class="flex flex-col lg:flex-row lg:h-full">
+      <div class="lg:basis-9/12 lg:h-full content-center grid">
+        <div class="stream-container" id="iframe-content"></div>
       </div>
-      <div class="basis-full lg:basis-3/12 lg:h-full">
-        <div class="chat-container h-80 xs:h-72 sm:h-52 md:h-24 lg:h-screen">
+      <div class="lg:basis-3/12 lg:h-full">
+        <div class="chat-container lg:h-screen">
           <div
             id="chat-output-container"
-            class="overflow-scroll h-5/6 px-2"
-            style="height: 90%;"
+            class="overflow-scroll px-2 pb-2 h-60 sm:h-48 md:h-24 lg:h-5/6 "
           ></div>
-          <div id="chat-input-container" class="px-2" style="height: 10%;">
+          <div
+            id="chat-input-container"
+            class="px-2 lg:h-1/6"
+          >
             <label for="chat-input">Enter Message:</label>
             <div class="flex flex-row">
               <input
@@ -102,6 +104,35 @@
         </div>
       </div>
     </div>
+
+    <footer class="bg-white rounded-lg shadow m-4">
+      <div
+        class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
+      >
+        <span class="text-sm text-gray-500 sm:text-center"
+          >© 2023
+          <a href="https://flowbite.com/" class="hover:underline">Flowbite™</a>.
+          All Rights Reserved.
+        </span>
+        <ul
+          class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0"
+        >
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+          </li>
+          <li>
+            <a href="#" class="hover:underline">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
     <script src="./js/iframe.js"></script>
     <script src="./js/chatroom.js"></script>
   </body>

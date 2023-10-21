@@ -37,7 +37,7 @@ window.onload = () => {
       name: name,
       email: email,
       address: address,
-      message: message
+      message: message,
     };
     return JSON.stringify(messageObject);
   };
@@ -48,36 +48,42 @@ window.onload = () => {
       "chat-output-container"
     );
     chatOutputContainer.innerHTML = "";
+    var previousTimestamp = 0;
     messages.forEach((message) => {
       const messageParsed = JSON.parse(message);
-      const messageElement = document.createElement("div");
-      const messageContainer = document.createElement("div");
+      const isContinuousMessage =
+        previousTimestamp != 0 &&
+        messageParsed["timestamp"] - previousTimestamp < 10000;
+
+      const info = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
-      const info = document.createElement("div")
       info.innerHTML = `${date} ${messageParsed["name"]} `;
-      info.classList.add("chat-message");
-      info.classList.add("text-xs");
-      info.classList.add("ml-2");
-      messageElement.classList.add("chat-message");
-      messageElement.classList.add("text-sm");
-      messageContainer.className = [
-        "ml-2",
-        "py-3",
-        "px-4",
-        "bg-gray-400",
-        "rounded-bl-xl",
-        "rounded-br-3xl",
-        "rounded-tr-3xl",
-        "rounded-tl-xl",
-        "text-white",
-        "justify-end",
-        "mb-2"
-      ].join(" ");      
+      info.className = "text-xs ml-2 w-2/3";
+
+      const messageElement = document.createElement("div");
+      if (!isContinuousMessage)
+        messageElement.className =
+          "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
+      else
+        messageElement.className =
+          "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
       messageElement.innerHTML = `${messageParsed["message"]}`;
+
+      const messageContainer = document.createElement("div");
+      if (!isContinuousMessage) messageContainer.appendChild(info);
       messageContainer.appendChild(messageElement);
-      chatOutputContainer.appendChild(info);
-      chatOutputContainer.appendChild(messageContainer);
+      messageContainer.className = "w-2/3 flex flex-col justify-end";
+
+      const fullMessageContainer = document.createElement("div");
+      fullMessageContainer.appendChild(messageContainer);
+      fullMessageContainer.className = "w-full flex flex-row justify-end";
+      if (!isContinuousMessage) fullMessageContainer.className += " mt-2";
+      else fullMessageContainer.className += " mt-1";
+
+      chatOutputContainer.appendChild(fullMessageContainer);
+      previousTimestamp = messageParsed["timestamp"];
     });
+    chatOutputContainer.scrollTop = chatOutputContainer.scrollHeight;
   };
 
   ws.onopen = () => {
