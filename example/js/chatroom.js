@@ -28,12 +28,32 @@ window.onload = () => {
     messages.forEach((message) => {
       const messageParsed = JSON.parse(message);
       const messageElement = document.createElement("div");
+      const messageContainer = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
+      const info = document.createElement("div")
+      info.innerHTML = `${date} ${messageParsed["name"]} `;
+      info.classList.add("chat-message");
+      info.classList.add("text-xs");
+      info.classList.add("ml-2");
       messageElement.classList.add("chat-message");
       messageElement.classList.add("text-sm");
-
-      messageElement.innerHTML = `${date} ${messageParsed["name"]} ${messageParsed["message"]}`;
-      chatOutputContainer.appendChild(messageElement);
+      messageContainer.className = [
+        "ml-2",
+        "py-3",
+        "px-4",
+        "bg-gray-400",
+        "rounded-bl-xl",
+        "rounded-br-3xl",
+        "rounded-tr-3xl",
+        "rounded-tl-xl",
+        "text-white",
+        "justify-end",
+        "mb-2"
+      ].join(" ");      
+      messageElement.innerHTML = `${messageParsed["message"]}`;
+      messageContainer.appendChild(messageElement);
+      chatOutputContainer.appendChild(info);
+      chatOutputContainer.appendChild(messageContainer);
     });
   };
 
