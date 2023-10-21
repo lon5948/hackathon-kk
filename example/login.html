@@ -2,53 +2,8 @@
 <html>
 <head>
     <title>Login</title>
-    <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Add Custom CSS for Color and Layout -->
-    <style>
-        body {
-            background: linear-gradient(to bottom, #56CCF2, #2F80ED);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-container {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 60px; /* Increase padding to add more white space */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .login-container h3 {
-            text-align: center;
-            color: #333;
-        }
-
-        .login-button {
-            background-color: #007BFF;
-            color: #fff;
-        }
-
-        .login-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Custom CSS to display label and input on the same line */
-        .form-group {
-            display: flex;
-            align-items: center;
-        }
-
-        .form-group label {
-            flex: 1;
-        }
-
-        .form-group input {
-            flex: 2;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
     <div class="login-container">
@@ -73,34 +28,9 @@
             </div>
         </form>
     </div>
-
-    <!-- Add Bootstrap JS and jQuery links (required for Bootstrap functionality) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        document.getElementById("loginForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent the form from submitting
-
-            // Get the entered data
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const address = document.getElementById("address").value;
-
-            // Check if all fields are entered
-            if (name.trim() !== "" && email.trim() !== "" && address.trim() !== "") {
-                // Store the data in sessionStorage
-                sessionStorage.setItem("name", name);
-                sessionStorage.setItem("email", email);
-                sessionStorage.setItem("address", address);
-
-                // Redirect to main.html
-                window.location.href = "chatroom.html";
-            } else {
-                alert("Please fill in all fields.");
-            }
-        });
-    </script>
+    <script src="./js/login.js"></script>
 </body>
 </html>
