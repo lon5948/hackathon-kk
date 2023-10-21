@@ -1,0 +1,40 @@
+/* styles.css */
+
+#chat-input-container {
+    text-align: left;
+}
+
+label {
+    color: blue;
+    font-size: 20px;
+}
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid blue;
+    font-size: 20px;
+}
+
+
+div {
+    margin: 10px 0;
+}
+
+/* Apply CSS for the two-column layout */
+.container {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    padding: 5px;
+}
+
+/* Add styling for each column */
+.left-column {
+    background-color: #ffffff;
+}
+
+.right-column {
+    background-color: #ffffff;
+}

@@ -1,19 +1,37 @@
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="shortcut icon" href="./favicon.ico">
     <title>Chatroom</title>
   </head>
   <body>
+    <div class="container">
+    <div class="column left-column">
+    <iframe
+      src="https://showroom.one-stage.kkstream.io?token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3N2RhODVjLTllZjgtNTVjYS05M2FkLTAyYTMyZjkwZjg2MyIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV9pZCI6IjZkOTc0MDFkLTAxZDYtNDY4Ny05NTRmLWE3NGZiN2EzNWJkMCIsInJlc291cmNlX3R5cGUiOiJSRVNPVVJDRV9UWVBFX0xJVkVfRVZFTlQifQ.H3NDCRViL9ieUC_KEsGM1bGo1KtWStPc_Irwze7NCcm6Rf5sK6UWU2TGQs2yO5yOGilfu3ksV5HvXvMsQFk_4VHjR467YE77QwSwrndwdX79vvB-ST0semKngkZqzWp9XcWrez9ACZSImtTWl2fyhmTkB-ykPLuq98Sk3tf79oZ9PmvTK08AOkYu-xssv559RoCvxlQN24Wx-um1HTzXwGqXYD_4hB07dIPdXSFX41yMZP3S61-Qdm4-7o_jZV6BzwBev-ztkYGAJZI3EUmwueqotHdMipB69w7uYeoLvghFGPClUqOu446bvCWSPpeB8hsInsgEp89JnX2P3HdguD0oj8Hd6F_TYS9n5yPuwbfyF09lPVYns6vCSokFS1gSMWVKa4AWIWYsHzU_1oJhAxfkmELRB-VA7dPa-0T6z9hy8_VBkA2w7C5ejXrySNuuh5-gfhKKzRL_mRs8vjIm4MJXghuolFrMGNdpZlSWq4htplHzP0cSX6mny2SCI8u8_4ICmMmPiJVaJ6syqLLr8vjJph-0leBIgYavWQXtUOeEaRgaod4wqN7gB2VrepBxu2zIA9aHcH_UDD2FBYMsKwUI3LbsImvuGcvGDXOpTJK3FWQpQ77fPvE9DshlVWuHojJidA5YsvH9Eyba8Dc-wJRpxFTvQHEfPgeBTFnWvm4"
+      width="960"
+      height="540"
+      allow="autoplay; encrypted-media; clipboard-write"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+    <script src="./js/iframe.js"></script>
+    </div>
+    <div class="column right-column">
+    
+    <div id="chat-output-container"></div>
     <div id="chat-input-container">
       <div>
-        <label for="chat-input">Text</label>
-        <input type="text" name="chat-input" id="chat-input" />
+        <label for="chat-input">Enter Message:</label>
+        <input type="text" name="chat-input" id="chat-input">
         <button id="chat-send">Send</button>
       </div>
     </div>
-    <div id="chat-output-container"></div>
-    <script src="./chatroom.js"></script>
+    <script src="./js/chatroom.js"></script>
+    </div>
   </body>
 </html>

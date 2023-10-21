@@ -27,7 +27,7 @@ window.onload = () => {
       const messageParsed = JSON.parse(message);
       const messageElement = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
-      messageElement.innerHTML = `${date} ${messageParsed["nickname"]} ${messageParsed["message"]}`;
+      messageElement.innerHTML = `${date} ${messageParsed["nickname"]}<br>${messageParsed["message"]}`;
       chatOutputContainer.appendChild(messageElement);
     });
   };
