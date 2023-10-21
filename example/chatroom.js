@@ -1,7 +1,8 @@
 window.onload = () => {
   // Generate client id
   const clientId = Math.floor(Math.random() * 1000000 + 1);
-  const ws = new WebSocket(`ws://localhost:4000/ws/symbol_events/${clientId}`);
+  const serverURL = "ws://hackathon-kk.dasbd72.com";
+  const ws = new WebSocket(`${serverURL}/ws/chatroom/${clientId}`);
 
   const messages = [];
 

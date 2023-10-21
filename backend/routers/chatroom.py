@@ -8,7 +8,7 @@ from routers.manager import consoleManager
 router = APIRouter()
 
 
-@router.websocket("/ws/symbol_events/{client_id}")
+@router.websocket("/ws/chatroom/{client_id}")
 async def ws_symbol_events(websocket: WebSocket, client_id: str):
     await consoleManager.connect(websocket)
     await consoleManager.broadcast_json({
