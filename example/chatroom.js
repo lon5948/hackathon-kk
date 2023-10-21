@@ -6,13 +6,15 @@ window.onload = () => {
 
   const messages = [];
 
-  const constructMessage = (nickname, message) => {
+  const constructMessage = (name, email, address, message) => {
     const messageObject = {
       timestamp: Date.now(),
       "event-type": "chat",
       "client-id": clientId,
-      nickname: nickname,
-      message: message,
+      name: name,
+      email: email,
+      address: address,
+      message: message
     };
     return JSON.stringify(messageObject);
   };
@@ -27,7 +29,7 @@ window.onload = () => {
       const messageParsed = JSON.parse(message);
       const messageElement = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
-      messageElement.innerHTML = `${date} ${messageParsed["nickname"]} ${messageParsed["message"]}`;
+      messageElement.innerHTML = `${date} ${messageParsed["name"]} ${messageParsed["message"]}`;
       chatOutputContainer.appendChild(messageElement);
     });
   };
@@ -56,7 +58,9 @@ window.onload = () => {
   // Send message on button click
   document.getElementById("chat-send").addEventListener("click", () => {
     const message = document.getElementById("chat-input").value;
-    const nickname = sessionStorage.getItem("nickname");
-    ws.send(constructMessage(nickname, message));
+    const name = sessionStorage.getItem("name");
+    const email = sessionStorage.getItem("email");
+    const address = sessionStorage.getItem("address");
+    ws.send(constructMessage(name, email, address, message));
   });
 };

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Page</title>
+    <title>Login</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add Custom CSS for Color and Layout -->
@@ -17,14 +17,13 @@
         .login-container {
             background-color: #ffffff;
             border-radius: 10px;
-            padding: 60px; /* Increase padding to make it larger */
+            padding: 60px; /* Increase padding to add more white space */
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .login-container h3 {
             text-align: center;
             color: #333;
-            font-size: 24px; /* Increase font size */
         }
 
         .login-button {
@@ -35,18 +34,41 @@
         .login-button:hover {
             background-color: #0056b3;
         }
+
+        /* Custom CSS to display label and input on the same line */
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            flex: 1;
+        }
+
+        .form-group input {
+            flex: 2;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h3>Please Enter Your Nickname</h3>
+        <h3>Please Enter Your Infomation</h3>
+        <br>
         <form id="loginForm">
             <div class="form-group">
-                <br>
-                <input type="text" class="form-control" id="nickname" name="nickname" required>
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <br>
             <div class="text-center">
-                <br>
                 <button type="submit" class="btn login-button">Login</button>
             </div>
         </form>
@@ -61,18 +83,22 @@
         document.getElementById("loginForm").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent the form from submitting
 
-            // Get the entered nickname
-            const nickname = document.getElementById("nickname").value;
+            // Get the entered data
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
 
-            // Check if a nickname is entered
-            if (nickname.trim() !== "") {
-                // Store the nickname in sessionStorage
-                sessionStorage.setItem("nickname", nickname);
+            // Check if all fields are entered
+            if (name.trim() !== "" && email.trim() !== "" && address.trim() !== "") {
+                // Store the data in sessionStorage
+                sessionStorage.setItem("name", name);
+                sessionStorage.setItem("email", email);
+                sessionStorage.setItem("address", address);
 
                 // Redirect to main.html
                 window.location.href = "chatroom.html";
             } else {
-                alert("Please enter a nickname.");
+                alert("Please fill in all fields.");
             }
         });
     </script>
