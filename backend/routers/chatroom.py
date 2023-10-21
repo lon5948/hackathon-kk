@@ -3,17 +3,17 @@ import time
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from routers.manager import consoleManager
+from routers.manager import connectionManager
 
 router = APIRouter()
 
 
 @router.websocket("/ws/chatroom/{client_id}")
 async def ws_symbol_events(websocket: WebSocket, client_id: str):
-    await consoleManager.connect(websocket)
+    await connectionManager.connect(websocket)
 
     if client_id != "listener":
-        await consoleManager.broadcast_json(
+        await connectionManager.broadcast_json(
             {
                 "timestamp": int(time.time() * 1000),
                 "event-type": "system",
@@ -33,11 +33,11 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     continue
 
                 # send message to all clients
-                await consoleManager.broadcast(data)
+                await connectionManager.broadcast(data)
 
         except WebSocketDisconnect:
-            consoleManager.disconnect(websocket)
-            await consoleManager.broadcast_json(
+            connectionManager.disconnect(websocket)
+            await connectionManager.broadcast_json(
                 {
                     "timestamp": int(time.time() * 1000),
                     "event-type": "system",
@@ -49,8 +49,8 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
     else:
         try:
             while True:
-                # async sleep
-                await asyncio.sleep(1)
+                # async sleep to prevent 100% CPU usage
+                await asyncio.sleep(0.1)
 
         except WebSocketDisconnect:
-            consoleManager.disconnect(websocket)
+            connectionManager.disconnect(websocket)
