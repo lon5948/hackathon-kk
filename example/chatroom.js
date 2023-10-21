@@ -6,12 +6,12 @@ window.onload = () => {
 
   const messages = [];
 
-  const constructMessage = (email, message) => {
+  const constructMessage = (nickname, message) => {
     const messageObject = {
       timestamp: Date.now(),
       "event-type": "chat",
       "client-id": clientId,
-      email: email,
+      nickname: nickname,
       message: message,
     };
     return JSON.stringify(messageObject);
@@ -27,7 +27,7 @@ window.onload = () => {
       const messageParsed = JSON.parse(message);
       const messageElement = document.createElement("div");
       const date = new Date(messageParsed["timestamp"]).toLocaleString();
-      messageElement.innerHTML = `${date} ${messageParsed["message"]}`;
+      messageElement.innerHTML = `${date} ${messageParsed["nickname"]} ${messageParsed["message"]}`;
       chatOutputContainer.appendChild(messageElement);
     });
   };
@@ -56,7 +56,7 @@ window.onload = () => {
   // Send message on button click
   document.getElementById("chat-send").addEventListener("click", () => {
     const message = document.getElementById("chat-input").value;
-    const email = document.getElementById("chat-email").value;
-    ws.send(constructMessage(email, message));
+    const nickname = document.getElementById("chat-nickname").value;
+    ws.send(constructMessage(nickname, message));
   });
 };
