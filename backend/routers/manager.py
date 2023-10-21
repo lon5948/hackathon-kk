@@ -27,14 +27,4 @@ class ConnectionManager:
             await connection.send_json(message)
 
 
-class ConsoleConnectionManager(ConnectionManager):
-    async def send_first_events(
-        self, websocket: WebSocket, events: list[dict]
-    ):
-        await websocket.send_json()
-
-    async def update_events(self, websocket: WebSocket, events: list[dict]):
-        await websocket.send_json()
-
-
-consoleManager = ConsoleConnectionManager()
+connectionManager = ConnectionManager()
