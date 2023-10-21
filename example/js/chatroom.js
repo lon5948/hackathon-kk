@@ -50,39 +50,63 @@ window.onload = () => {
     );
     chatOutputContainer.innerHTML = "";
     var previousTimestamp = 0;
+    var previousClientId = "";
     messages.forEach((message) => {
       const messageParsed = JSON.parse(message);
-      const isContinuousMessage =
-        previousTimestamp != 0 &&
-        messageParsed["timestamp"] - previousTimestamp < 10000;
 
-      const info = document.createElement("div");
-      const date = new Date(messageParsed["timestamp"]).toLocaleString();
-      info.innerHTML = `${date} ${messageParsed["name"]} `;
-      info.className = "text-xs ml-2 w-2/3";
+      if (messageParsed["event-type"] == "chat") {
+        const isCurrentUser = messageParsed["client-id"] == clientId;
+        const isContinuousMessage =
+          previousClientId == messageParsed["client-id"] &&
+          previousTimestamp != 0 &&
+          messageParsed["timestamp"] - previousTimestamp < 10000;
 
-      const messageElement = document.createElement("div");
-      if (!isContinuousMessage)
-        messageElement.className =
-          "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
-      else
-        messageElement.className =
-          "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
-      messageElement.innerHTML = `${messageParsed["message"]}`;
+        const dateElement = document.createElement("div");
+        const date = new Date(messageParsed["timestamp"]).toLocaleString();
+        dateElement.innerHTML = `${date}`;
+        dateElement.className = "text-xs text-gray-400";
 
-      const messageContainer = document.createElement("div");
-      if (!isContinuousMessage) messageContainer.appendChild(info);
-      messageContainer.appendChild(messageElement);
-      messageContainer.className = "w-2/3 flex flex-col justify-end";
+        const dateElementContainer = document.createElement("div");
+        dateElementContainer.appendChild(dateElement);
+        dateElementContainer.className =
+          "w-full flex flex-row justify-center mt-2";
 
-      const fullMessageContainer = document.createElement("div");
-      fullMessageContainer.appendChild(messageContainer);
-      fullMessageContainer.className = "w-full flex flex-row justify-end";
-      if (!isContinuousMessage) fullMessageContainer.className += " mt-2";
-      else fullMessageContainer.className += " mt-1";
+        const usernameElement = document.createElement("div");
+        usernameElement.innerHTML = `${messageParsed["name"]} `;
+        usernameElement.className = "text-xs ml-2 w-2/3";
 
-      chatOutputContainer.appendChild(fullMessageContainer);
-      previousTimestamp = messageParsed["timestamp"];
+        const messageElement = document.createElement("div");
+        if (isCurrentUser)
+          messageElement.className =
+            "text-sm pl-2 py-2 px-3 bg-sky-400 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white";
+        else
+          messageElement.className =
+            "text-sm pl-2 py-2 px-3 bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black";
+        messageElement.innerHTML = `${messageParsed["message"]}`;
+
+        const messageContainer = document.createElement("div");
+        if (!isContinuousMessage) messageContainer.appendChild(usernameElement);
+        messageContainer.appendChild(messageElement);
+        messageContainer.className = "w-2/3 flex flex-col justify-end";
+
+        const fullMessageContainer = document.createElement("div");
+        fullMessageContainer.appendChild(messageContainer);
+        fullMessageContainer.className =
+          "w-full flex flex-row justify-end mt-1";
+
+        if (!isContinuousMessage)
+          chatOutputContainer.appendChild(dateElementContainer);
+        chatOutputContainer.appendChild(fullMessageContainer);
+
+        previousTimestamp = messageParsed["timestamp"];
+        previousClientId = messageParsed["client-id"];
+      } else {
+        const systemMessageElement = document.createElement("div");
+        systemMessageElement.className =
+          "text-xs text-gray-400 w-full flex flex-row justify-center mt-2";
+        systemMessageElement.innerHTML = `${messageParsed["message"]}`;
+        chatOutputContainer.appendChild(systemMessageElement);
+      }
     });
     chatOutputContainer.scrollTop = chatOutputContainer.scrollHeight;
   };
