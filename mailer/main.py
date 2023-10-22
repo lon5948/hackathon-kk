@@ -19,7 +19,7 @@ url = KKSTREAM_BASE_URL + STREAM_ID
 headers = {
     "x-bv-org-id": ORG_ID,
     "Accept": "application/json",
-    "authorization": "Bearer" + API_KEY
+    "authorization": "Bearer " + API_KEY
 }
 
 
