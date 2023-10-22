@@ -5,7 +5,7 @@ import logging
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from backend.routers.manager import connectionManager
+from routers.manager import connectionManager
 
 router = APIRouter()
 
