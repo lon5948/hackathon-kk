@@ -3,3 +3,4 @@ __pycache__
 .idea
 /output/*.txt
 /output/order_result.csv
+.env.local
