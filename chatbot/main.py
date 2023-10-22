@@ -9,6 +9,7 @@ import websockets
 from dotenv import load_dotenv
 
 load_dotenv()
+load_dotenv(".env.local")
 
 openai.organization = "org-eNSouZjGbZlSWgbQFUM09Jon"
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -69,6 +70,7 @@ async def ws_thread():
                     "timestamp": int(time.time() * 1000),
                     "event-type": "system",
                     "client-id": client_id,
+                    "dest-id": data["client-id"],
                     "name": "System",
                     "message": chatbot(msg),
                 }

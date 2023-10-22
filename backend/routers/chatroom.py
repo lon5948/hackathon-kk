@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.websocket("/ws/chatroom/{client_id}")
 async def ws_symbol_events(websocket: WebSocket, client_id: str):
-    await connectionManager.connect(websocket)
+    await connectionManager.connect(client_id, websocket)
 
     if client_id == "listener":
         try:
@@ -26,7 +26,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     continue
 
         except WebSocketDisconnect:
-            connectionManager.disconnect(websocket)
+            connectionManager.disconnect(client_id)
     elif client_id == "chatbot":
         try:
             while True:
@@ -38,10 +38,15 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                 except asyncio.TimeoutError:
                     continue
                 
-                await connectionManager.broadcast(data)
+                parsed_data = json.loads(data)
+                if "dest-id" in parsed_data:
+                    dest_id = parsed_data["dest-id"]
+                    await connectionManager.send_to(data, dest_id)
+                else:
+                    await connectionManager.broadcast(data)
 
         except WebSocketDisconnect:
-            connectionManager.disconnect(websocket)
+            connectionManager.disconnect(client_id)
     else:
         try:
             data = await asyncio.wait_for(
@@ -53,12 +58,12 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                 "client-id"
             ] != client_id:
                 raise Exception("Invalid join request")
-            
+
             name = parsed_data["name"]
 
         except Exception as e:
             logging.error(f"Client id {client_id} failed to connect: {e}")
-            connectionManager.disconnect(websocket)
+            connectionManager.disconnect(client_id)
 
         await connectionManager.broadcast_json(
             {
@@ -83,7 +88,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                 await connectionManager.broadcast(data)
 
         except WebSocketDisconnect:
-            connectionManager.disconnect(websocket)
+            connectionManager.disconnect(client_id)
             await connectionManager.broadcast_json(
                 {
                     "timestamp": int(time.time() * 1000),
