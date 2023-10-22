@@ -38,7 +38,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                 "event-type": "system",
                 "client-id": client_id,
                 "name": "System",
-                "message": f"Client {name} joined the chat",
+                "message": f"{name} joined the chat",
             }
         )
         try:
@@ -62,7 +62,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     "event-type": "system",
                     "client-id": client_id,
                     "name": "System",
-                    "message": f"Client {name} left the chat",
+                    "message": f"{name} left the chat",
                 }
             )
     else:
