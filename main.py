@@ -4,11 +4,6 @@ from mailer import run_mailer
 import multiprocessing
 
 
-async def create_threads(function):
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(function())
-
-
 def run_async_function(func):
     asyncio.run(func())
 
@@ -24,7 +19,3 @@ if __name__ == "__main__":
     # Join the processes (this will block the main program until the child processes finish)
     process1.join()
     # process2.join()
-
-
-
-
