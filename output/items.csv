@@ -1,3 +1,3 @@
-abr,item_name,total_count
-A,test_item,5
-B,test2,10
+abr,item_name,total_count,remaining_count
+A,shirt#001,5,5
+B,shirt#002,10,10

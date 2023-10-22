@@ -27,19 +27,20 @@ def process(msg: str):
 
 
 def update_orders(content: dict, orders: list):
-    global orders_df
+    global orders_df, items_df
     for (item, count) in orders:
         count = int(count)
         if count < 0:
             continue
-        item_name = items_df.where(items_df["abr"] == item)
+        item_name = items_df.where(items_df["abr"] == item).dropna()
         if item_name.empty:
             continue
         item_name = item_name.item_name.values[0]
-        item_count = items_df.where(items_df["item_name"] == item_name).total_count.values[0]
-        ordered_count = orders_df.where(orders_df["item_name"] == item_name)["count"].sum()
-        print(item, item_name, type(item_count), item_count, type(ordered_count), ordered_count)
-        if ordered_count + count > item_count:
+        item_remaining_count = items_df.where(items_df["item_name"] == item_name).dropna().remaining_count.values[0]
+        item_remaining_count = int(item_remaining_count)
+        print(item_name, count, item_remaining_count)
+        # print(item, item_name, type(item_count), item_count, type(ordered_count), ordered_count)
+        if count > item_remaining_count:
             continue
         order_content = {
             "name": [content["name"]],
@@ -48,10 +49,14 @@ def update_orders(content: dict, orders: list):
             "item_name": [item_name],
             "count": [count]
         }
-        new_order_df = pd.DataFrame(data=order_content)
-        new_df = pd.concat([orders_df, new_order_df])
-        new_df.to_csv("../output/orders.csv", encoding='utf-8', index=False)
+        new_orders_df = pd.DataFrame(data=order_content)
+        new_df = pd.concat([orders_df, new_orders_df])
+        new_df.to_csv("./output/orders.csv", encoding='utf-8', index=False)
         orders_df = new_df.copy()
+
+        items_df.loc[items_df['item_name'] == item_name, 'remaining_count'] = item_remaining_count - count
+        items_df.to_csv("./output/items.csv", encoding='utf-8', index=False)
+        # items_df = new_items_df.copy()
 
 
 def get_df():
