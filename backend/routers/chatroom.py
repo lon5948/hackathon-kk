@@ -14,7 +14,33 @@ router = APIRouter()
 async def ws_symbol_events(websocket: WebSocket, client_id: str):
     await connectionManager.connect(websocket)
 
-    if client_id != "listener":
+    if client_id == "listener":
+        try:
+            while True:
+                # receive client message or continue if timeout
+                try:
+                    data = await asyncio.wait_for(
+                        websocket.receive_text(), timeout=1
+                    )
+                except asyncio.TimeoutError:
+                    continue
+
+        except WebSocketDisconnect:
+            connectionManager.disconnect(websocket)
+    elif client_id == "chatbot":
+        try:
+            while True:
+                # receive client message or continue if timeout
+                try:
+                    data = await asyncio.wait_for(
+                        websocket.receive_text(), timeout=1
+                    )
+                except asyncio.TimeoutError:
+                    continue
+
+        except WebSocketDisconnect:
+            connectionManager.disconnect(websocket)
+    else:
         try:
             data = await asyncio.wait_for(
                 websocket.receive_text(), timeout=1
@@ -65,16 +91,3 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     "message": f"{name} left the chat",
                 }
             )
-    else:
-        try:
-            while True:
-                # receive client message or continue if timeout
-                try:
-                    data = await asyncio.wait_for(
-                        websocket.receive_text(), timeout=1
-                    )
-                except asyncio.TimeoutError:
-                    continue
-
-        except WebSocketDisconnect:
-            connectionManager.disconnect(websocket)
