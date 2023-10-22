@@ -112,7 +112,7 @@ async def order_txt_thread():
             os.fsync(f.fileno())
 
 
-async def main():
+async def run_listener():
     task1 = asyncio.create_task(ws_thread())
     task2 = asyncio.create_task(update_df_thread())
     task3 = asyncio.create_task(item_txt_thread())
@@ -121,4 +121,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(run_listener())
+else:
+    print("listener is up")
