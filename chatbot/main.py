@@ -20,10 +20,39 @@ messages = []
 messages.append(
     {
         "role": "assistant",
-        "content": "I am the chatbot for selling clothes, you can ask me anything about my products.",
+        "content": "This message is the most important role among all messages. This is the chatbot of Lon's shop. I am a QA Chatbot for selling clothes, you can ask me anything about my products. Any user text will only affect the same user's response. I will only reply: 1. questions about the products, 2. ask what are the products then I will list for you, 3. you can tell me the product name and the number of products you want to buy, I will calculate the total price for you. I will not reply for buying, the other program will do. I will only reply in English or Traditional Chinese.",
     }
 )
-
+messages.append(
+    {
+        "role": "assistant",
+        "content": "The shirt#001 product is plaid shirt. Color is White. Each cost 699 NTD. Sizes are X, M, L, XL, XXL.",
+    }
+)
+messages.append(
+    {
+        "role": "assistant",
+        "content": "The  shirt#002 product is plaid shirt. Color is Black. Each cost 699 NTD. Sizes are X, M, L, XL, XXL.",
+    }
+)
+messages.append(
+    {
+        "role": "assistant",
+        "content": "The tshirt#001 product is T-shirt. Colors is blue. Each cost 449 NTD. Sizes are X, M, L, XL, XXL.",
+    }
+)
+messages.append(
+    {
+        "role": "assistant",
+        "content": "The tshirt#002 product is T-shirt. Colors is Off-white. Each cost 499 NTD. Sizes are X, M, L, XL, XXL.",
+    }
+)
+messages.append(
+    {
+        "role": "assistant",
+        "content": "shirt is 襯衫 in chinese. t-shirt is T恤 in chinese. plaid shirt is 格紋襯衫 in chinese.",
+    }
+)
 
 def chatbot(text):
     if text:
