@@ -5,9 +5,9 @@ const generatePureText = (text) => {
 };
 const construct = (eventType, message) => {
   const clientId = sessionStorage.getItem("clientId");
-  const name = sessionStorage.getItem("name");
-  const email = sessionStorage.getItem("email");
-  const address = sessionStorage.getItem("address");
+  const name = localStorage.getItem("name");
+  const email = localStorage.getItem("email");
+  const address = localStorage.getItem("address");
   const messageObject = {
     timestamp: Date.now(),
     "event-type": eventType,
@@ -34,7 +34,7 @@ window.onload = () => {
   sessionStorage.setItem("clientId", clientId);
 
   const messages = [];
-  const url = sessionStorage.getItem("url");
+  const url = localStorage.getItem("url");
   iframeElement = document.getElementById("iframe-content");
   console.log(url);
   html_str = [
