@@ -170,12 +170,12 @@ window.onload = () => {
     ws.send(constructMessage(message));
     chatInputElement.value = "";
   };
-  document.getElementById("chat-send").addEventListener("click", sendMessage);
-  document
-    .getElementById("chat-input")
-    .addEventListener("keyup", function (event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
+  document.getElementById("chat-send").addEventListener("click", (e) => {
+    if (e.isTrusted) sendMessage();
+  });
+  document.getElementById("chat-input").addEventListener("keypress", function (e) {
+    if ((e.ctrlKey) && e.key === "Enter") {
+      sendMessage();
+    }
+  });
 };
