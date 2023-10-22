@@ -1,5 +1,7 @@
 import asyncio
+import json
 import time
+import logging
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
@@ -13,13 +15,30 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
     await connectionManager.connect(websocket)
 
     if client_id != "listener":
+        try:
+            data = await asyncio.wait_for(
+                websocket.receive_text(), timeout=1
+            )
+            parsed_data = json.loads(data)
+
+            if parsed_data["event-type"] != "join" or parsed_data[
+                "client-id"
+            ] != client_id:
+                raise Exception("Invalid join request")
+            
+            name = parsed_data["name"]
+
+        except Exception as e:
+            logging.error(f"Client id {client_id} failed to connect: {e}")
+            connectionManager.disconnect(websocket)
+
         await connectionManager.broadcast_json(
             {
                 "timestamp": int(time.time() * 1000),
                 "event-type": "system",
                 "client-id": client_id,
                 "name": "System",
-                "message": f"Client #{client_id} joined the chat",
+                "message": f"Client {name} joined the chat",
             }
         )
         try:
@@ -43,7 +62,7 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     "event-type": "system",
                     "client-id": client_id,
                     "name": "System",
-                    "message": f"Client #{client_id} left the chat",
+                    "message": f"Client {name} left the chat",
                 }
             )
     else:

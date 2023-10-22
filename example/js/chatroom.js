@@ -3,12 +3,35 @@ const generatePureText = (text) => {
   element.innerText = text;
   return element.innerHTML;
 };
+const construct = (eventType, message) => {
+  const clientId = sessionStorage.getItem("clientId");
+  const name = sessionStorage.getItem("name");
+  const email = sessionStorage.getItem("email");
+  const address = sessionStorage.getItem("address");
+  const messageObject = {
+    timestamp: Date.now(),
+    "event-type": eventType,
+    "client-id": clientId,
+    name: name,
+    email: email,
+    address: address,
+    message: message,
+  };
+  return JSON.stringify(messageObject);
+};
+const constructJoinMessage = () => {
+  return construct("join", "Joined");
+};
+const constructMessage = (message) => {
+  return construct("chat", message);
+};
 
 window.onload = () => {
   // Generate client id
   const clientId = Math.floor(Math.random() * 1000000 + 1);
   const serverURL = "ws://hackathon-kk.dasbd72.com";
   const ws = new WebSocket(`${serverURL}/ws/chatroom/${clientId}`);
+  sessionStorage.setItem("clientId", clientId);
 
   const messages = [];
   const url = sessionStorage.getItem("url");
@@ -36,18 +59,6 @@ window.onload = () => {
       );
     }
   });
-  const constructMessage = (name, email, address, message) => {
-    const messageObject = {
-      timestamp: Date.now(),
-      "event-type": "chat",
-      "client-id": clientId,
-      name: name,
-      email: email,
-      address: address,
-      message: message,
-    };
-    return JSON.stringify(messageObject);
-  };
 
   // Render messages on document.getElementById("chat-output-container")
   const renderMessages = () => {
@@ -121,6 +132,8 @@ window.onload = () => {
 
   ws.onopen = () => {
     // connection opened
+    console.log("Connected to server");
+    ws.send(constructJoinMessage());
   };
 
   ws.onmessage = (e) => {
@@ -154,10 +167,7 @@ window.onload = () => {
     const chatInputElement = document.getElementById("chat-input");
     const message = chatInputElement.value;
     if (message == "") return;
-    const name = sessionStorage.getItem("name");
-    const email = sessionStorage.getItem("email");
-    const address = sessionStorage.getItem("address");
-    ws.send(constructMessage(name, email, address, message));
+    ws.send(constructMessage(message));
     chatInputElement.value = "";
   };
   document.getElementById("chat-send").addEventListener("click", sendMessage);
