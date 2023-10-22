@@ -37,6 +37,8 @@ async def ws_symbol_events(websocket: WebSocket, client_id: str):
                     )
                 except asyncio.TimeoutError:
                     continue
+                
+                await connectionManager.broadcast(data)
 
         except WebSocketDisconnect:
             connectionManager.disconnect(websocket)
