@@ -56,12 +56,11 @@ messages.append(
 
 def chatbot(text):
     if text:
-        messages.append({"role": "user", "content": text})
+        cat_message = messages + [{"role": "user", "content": text}]
         chat = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", messages=messages
+            model="gpt-3.5-turbo", messages=cat_message
         )
         reply = chat.choices[0].message.content
-        messages.append({"role": "assistant", "content": reply})
         return reply
 
 
