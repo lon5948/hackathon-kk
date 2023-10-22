@@ -8,7 +8,7 @@ from mailer.dump import dump_and_email
 
 load_dotenv()
 
-KKSTREAM_BASE_URL = os.getenv("KKSTREAM_BASE_URL", "https://api.one-stage.kkstream.io/")
+KKSTREAM_BASE_URL = os.getenv("KKSTREAM_BASE_URL", "https://api.one-stage.kkstream.io/bv/cms/v1/lives/")
 API_KEY = os.getenv("API_KEY")
 ORG_ID = os.getenv("ORG_ID")
 STREAM_ID = os.getenv("STREAM_ID")
