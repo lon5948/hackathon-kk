@@ -134,6 +134,15 @@ window.onload = () => {
     console.log(e.code, e.reason);
   };
 
+  // send message by pressing enter
+  document
+    .getElementById("chat-input")
+    .addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        document.getElementById("chat-send").click();
+      }
+    });
+
   // Send message on button click
   const sendMessage = () => {
     const chatInputElement = document.getElementById("chat-input");

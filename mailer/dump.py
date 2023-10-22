@@ -1,4 +1,4 @@
-import smtplib, os, json
+import smtplib, os, re
 import pandas as pd
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -10,6 +10,14 @@ FILE_PATH = os.getenv("FILE_PATH", "output/orders.csv")
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "a0988282303@gmail.com")
 APP_PASSWORD = os.getenv("APP_PASSWORD")
 
+
+def is_valid_email(email: str):
+    pattern = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    if re.match(pattern, email):
+        return True
+    else:
+        return False
+    
 def dump_and_email():
     df = pd.read_csv(FILE_PATH)
     content = pd.DataFrame(columns=["name", "address", "email", "items"])
@@ -43,7 +51,9 @@ def dump_and_email():
         msg['To'] = email
         msg['Subject'] = subject
         msg.attach(MIMEText(message, 'plain'))
-        server.sendmail(SENDER_EMAIL, email, msg.as_string())
+        
+        if is_valid_email(email):
+            server.sendmail(SENDER_EMAIL, email, msg.as_string())
         
         order_result = {
             "name": name,
