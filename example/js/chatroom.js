@@ -1,3 +1,9 @@
+const generatePureText = (text) => {
+  const element = document.createElement("div");
+  element.innerText = text;
+  return element.innerHTML;
+};
+
 window.onload = () => {
   // Generate client id
   const clientId = Math.floor(Math.random() * 1000000 + 1);
@@ -63,7 +69,7 @@ window.onload = () => {
 
         const dateElement = document.createElement("div");
         const date = new Date(messageParsed["timestamp"]).toLocaleString();
-        dateElement.innerHTML = `${date}`;
+        dateElement.innerText = `${date}`;
         dateElement.className = "text-xs text-gray-400";
 
         const dateElementContainer = document.createElement("div");
@@ -72,21 +78,21 @@ window.onload = () => {
           "w-full flex flex-row justify-center mt-2";
 
         const usernameElement = document.createElement("div");
-        usernameElement.innerHTML = `${messageParsed["name"]} `;
+        usernameElement.innerText = `${messageParsed["name"]} `;
         usernameElement.className = "text-xs ml-2 w-2/3";
 
         const messageElement = document.createElement("div");
-        messageElement.className = `text-sm pl-2 py-2 px-3 ${
+        messageElement.className = `text-sm break-words py-2 px-3 ${
           isCurrentUser
             ? "bg-sky-400 rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-3xl text-white"
             : "bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black"
         }`;
-        messageElement.innerHTML = `${messageParsed["message"]}`;
+        messageElement.innerText = `${messageParsed["message"]}`;
 
         const messageContainer = document.createElement("div");
         if (!isContinuousMessage) messageContainer.appendChild(usernameElement);
         messageContainer.appendChild(messageElement);
-        messageContainer.className = `w-2/3 flex flex-col justify-${
+        messageContainer.className = `min-w-[20%] max-w-[60%] flex flex-col justify-${
           isCurrentUser ? "end" : "start"
         }`;
 
@@ -135,20 +141,31 @@ window.onload = () => {
   };
 
   // send message by pressing enter
-  document.getElementById("chat-input").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-      document.getElementById("chat-send").click();
-    }
-  });
-  
+  document
+    .getElementById("chat-input")
+    .addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        document.getElementById("chat-send").click();
+      }
+    });
+
   // Send message on button click
-  document.getElementById("chat-send").addEventListener("click", () => {
-    const message = document.getElementById("chat-input").value;
+  const sendMessage = () => {
+    const chatInputElement = document.getElementById("chat-input");
+    const message = chatInputElement.value;
+    if (message == "") return;
     const name = sessionStorage.getItem("name");
     const email = sessionStorage.getItem("email");
     const address = sessionStorage.getItem("address");
     ws.send(constructMessage(name, email, address, message));
-
-    document.getElementById("chat-input").value = "";
-  });
+    chatInputElement.value = "";
+  };
+  document.getElementById("chat-send").addEventListener("click", sendMessage);
+  document
+    .getElementById("chat-input")
+    .addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
 };
