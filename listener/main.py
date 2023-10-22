@@ -56,9 +56,9 @@ def update_orders(content: dict, orders: list):
 
 def get_df():
     global items_df, orders_df
-    df = process_csv("../output/items.csv")
+    df = process_csv("items.csv")
     items_df = df.copy()
-    df = process_csv("../output/orders.csv")
+    df = process_csv("orders.csv")
     orders_df = df.copy()
 
 
