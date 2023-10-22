@@ -34,11 +34,10 @@ def check_stream_status(url, headers):
 
 
 async def run_mailer():
+    print("mailer is up")
     while check_stream_status(url, headers):
         time.sleep(CHECK_STREAM_SESSION)
 
 
 if __name__ == "__main__":
     asyncio.run(run_mailer())
-else:
-    print("mailer is up")

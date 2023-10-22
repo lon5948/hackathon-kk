@@ -56,9 +56,9 @@ def update_orders(content: dict, orders: list):
 
 def get_df():
     global items_df, orders_df
-    df = process_csv("items.csv")
+    df = process_csv("./output/items.csv")
     items_df = df.copy()
-    df = process_csv("orders.csv")
+    df = process_csv("./output/orders.csv")
     orders_df = df.copy()
 
 
@@ -86,7 +86,7 @@ async def update_df_thread():
 
 async def item_txt_thread():
     global items_df
-    with open("../output/item_output.txt", "w") as f:
+    with open("./output/item_output.txt", "w") as f:
         while True:
             await asyncio.sleep(1)
             f.seek(0)
@@ -99,7 +99,7 @@ async def item_txt_thread():
 
 async def order_txt_thread():
     global orders_df
-    with open("../output/order_output.txt", "w") as f:
+    with open("./output/order_output.txt", "w") as f:
         while True:
             await asyncio.sleep(1)
             f.seek(0)
@@ -117,10 +117,9 @@ async def run_listener():
     task2 = asyncio.create_task(update_df_thread())
     task3 = asyncio.create_task(item_txt_thread())
     task4 = asyncio.create_task(order_txt_thread())
+    print("listener is up")
     await asyncio.gather(task1, task2, task3, task4)
 
 
 if __name__ == "__main__":
     asyncio.run(run_listener())
-else:
-    print("listener is up")

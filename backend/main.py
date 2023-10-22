@@ -57,9 +57,8 @@ def run_backend():
         log_level="info",
         reload=True if MODE == "dev" else False,
     )
+    print("backend is up")
 
 
 if __name__ == "__main__":
     run_backend()
-else:
-    print("backend is up")
