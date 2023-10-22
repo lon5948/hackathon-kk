@@ -27,9 +27,12 @@ def check_stream_status(url, headers):
     response = requests.get(url, headers=headers)
     data = response.json()
 
-    if data['live']['status'] == "LIVE_STATUS_CLOSED":
+    if data['live']['status'] in ("LIVE_STATUS_CLOSED", "LIVE_STATUS_ENCODING"):
         dump_and_email()
+        print('live closed, mail sent')
         return False
+    print('live not closed')
+    print(data['live']['status'])
     return True
 
 
