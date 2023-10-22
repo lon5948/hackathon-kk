@@ -16,7 +16,7 @@
         /* overflow: hidden; */
       }
 
-      .stream-container {
+      #iframe-content {
         position: relative;
         padding-bottom: 62%;
         padding-top: 30px;
@@ -24,9 +24,9 @@
         overflow: hidden;
       }
 
-      .stream-container iframe,
-      .stream-container object,
-      .stream-container embed {
+      #iframe-content iframe,
+      #iframe-content object,
+      #iframe-content embed {
         position: absolute;
         top: 0;
         left: 0;
@@ -68,13 +68,17 @@
   </head>
   <body>
     <div class="flex flex-col lg:flex-row lg:h-full">
-      <div class="lg:basis-9/12 lg:h-full content-center grid">
-        <div class="stream-container" id="iframe-content"></div>
+      <div class="stream-container lg:basis-9/12 lg:h-full">
+        <div class="lg:h-screen w-full flex flex-col justify-center">
+          <div class="w-full flex flex-row justify-center">
+            <div id="iframe-content" class="w-full lg:outline lg:outline-1 lg:outline-zinc-200 lg:rounded-lg"></div>
+          </div>
+        </div>
       </div>
       <div class="chat-container lg:basis-3/12 lg:h-full">
         <div class="lg:h-screen lg:p-1 w-full flex flex-col justify-center">
           <div
-            class="lg:h-[90%] lg:outline lg:outline-1 lg:outline-zinc-200 lg:rounded-lg w-full"
+            class="lg:h-[85vh] w-full lg:outline lg:outline-1 lg:outline-zinc-200 lg:rounded-lg"
           >
             <div
               id="chat-output-container"
@@ -108,9 +112,8 @@
         class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
       >
         <span class="text-sm text-gray-500 sm:text-center"
-          >© 2023
-          <a href="#" class="hover:underline">Lon's</a>.
-          All Rights Reserved.
+          >© 2023 <a href="#" class="hover:underline">Lon's</a>. All Rights
+          Reserved.
         </span>
         <ul
           class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0"
