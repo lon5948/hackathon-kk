@@ -173,9 +173,11 @@ window.onload = () => {
   document.getElementById("chat-send").addEventListener("click", (e) => {
     if (e.isTrusted) sendMessage();
   });
-  document.getElementById("chat-input").addEventListener("keypress", function (e) {
-    if ((e.ctrlKey) && e.key === "Enter") {
-      sendMessage();
-    }
-  });
+  document
+    .getElementById("chat-input")
+    .addEventListener("keypress", function (e) {
+      if (e.ctrlKey && e.key === "Enter") {
+        sendMessage();
+      }
+    });
 };
