@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import os
 
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import chatroom, users
+from backend.routers import chatroom, users
 
 load_dotenv()
 
@@ -45,7 +46,8 @@ logger.info("Include routers")
 app.include_router(users.router)
 app.include_router(chatroom.router)
 
-if __name__ == "__main__":
+
+async def run_backend():
     uvicorn.run(
         app="main:app",
         host=SERVER_HOST,
@@ -55,3 +57,9 @@ if __name__ == "__main__":
         log_level="info",
         reload=True if MODE == "dev" else False,
     )
+
+
+if __name__ == "__main__":
+    asyncio.run(run_backend())
+else:
+    print("backend is up")

@@ -1,6 +1,10 @@
-import requests, os, time
+import asyncio
+
+import requests
+import os
+import time
 from dotenv import load_dotenv
-from email import dump_and_email
+from mailer.dump import dump_and_email
 
 load_dotenv()
 
@@ -22,12 +26,19 @@ headers = {
 def check_stream_status(url, headers):
     response = requests.get(url, headers=headers)
     data = response.json()
-    
+
     if data['live']['status'] == "LIVE_STATUS_CLOSED":
         dump_and_email()
         return False
     return True
 
-if __name__ == "__main__":
-    while(check_stream_status(url, headers)):
+
+async def run_mailer():
+    while check_stream_status(url, headers):
         time.sleep(CHECK_STREAM_SESSION)
+
+
+if __name__ == "__main__":
+    asyncio.run(run_mailer())
+else:
+    print("mailer is up")
