@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.routers import chatroom, users
+from routers import chatroom, users
 
 load_dotenv()
 
@@ -49,7 +49,7 @@ app.include_router(chatroom.router)
 
 def run_backend():
     uvicorn.run(
-        app="backend.main:app",
+        app="main:app",
         host=SERVER_HOST,
         port=SERVER_PORT,
         proxy_headers=True,

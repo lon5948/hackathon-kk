@@ -1,3 +1,3 @@
-from backend.main import *
+from main import *
 
 __all__ = ['run_backend']
