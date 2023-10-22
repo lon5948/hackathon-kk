@@ -134,6 +134,13 @@ window.onload = () => {
     console.log(e.code, e.reason);
   };
 
+  // send message by pressing enter
+  document.getElementById("chat-input").addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+      document.getElementById("chat-send").click();
+    }
+  });
+  
   // Send message on button click
   document.getElementById("chat-send").addEventListener("click", () => {
     const message = document.getElementById("chat-input").value;
@@ -141,5 +148,7 @@ window.onload = () => {
     const email = sessionStorage.getItem("email");
     const address = sessionStorage.getItem("address");
     ws.send(constructMessage(name, email, address, message));
+
+    document.getElementById("chat-input").value = "";
   });
 };
