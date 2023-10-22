@@ -90,13 +90,13 @@ window.onload = () => {
 
         const usernameElement = document.createElement("div");
         usernameElement.innerText = `${messageParsed["name"]} `;
-        usernameElement.className = "text-xs ml-2 w-2/3";
+        usernameElement.className = "text-xs ml-2";
 
         const messageElement = document.createElement("div");
-        messageElement.className = `text-sm break-words py-2 px-3 ${
+        messageElement.className = `text-sm break-words py-2 px-3 w-fit ${
           isCurrentUser
-            ? "bg-sky-400 rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-3xl text-white"
-            : "bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black"
+            ? "pl-4 bg-sky-400 rounded-bl-3xl rounded-br-xl rounded-tr-xl rounded-tl-3xl text-white"
+            : "pr-4 bg-gray-200 rounded-bl-xl rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-black"
         }`;
         messageElement.innerText = `${messageParsed["message"]}`;
 
